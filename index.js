@@ -1,6 +1,7 @@
 const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 const mongoose = require("mongoose");
 const { success, error } = require("consola");
 
@@ -15,14 +16,9 @@ const startApp = async () => {
   //Middlewares
   app.use(cors());
   app.use(bodyParser.json());
+  app.use(passport.initialize());
 
-  //User router Middleware
-  // app.get("/", (req, res) => {
-  //   res.status(200).json({
-  //     message: "Hello bro",
-  //     success: true,
-  //   });
-  // });
+  require("./middlewares/passport")(passport);
   app.use("/api/users", UserRouter);
 
   //Database connection
